@@ -1,1 +1,1 @@
-# MS_SCHOOL
+# MS_AI_SCHOOL
