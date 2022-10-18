@@ -63,6 +63,10 @@ while (iteration.status != 'Completed'):
 
 print('Done!')
 
+# publish
+trainer.publish_iteration(project.id, iteration.id, publish_iteration_name, prediction_resource_id)
+print ("Done!")
+
 # 예측 엔드포인트 테스트
 prediction_credentials = ApiKeyCredentials(in_headers={"Prediction-key": prediction_key})
 predictor = CustomVisionPredictionClient(ENDPOINT, prediction_credentials)
