@@ -54,6 +54,15 @@ print(arr.ndim)
 arr_1 = arr[:2,1:3]
 print(arr_1)
 
+print("arr[0,2] : %d" % arr[0,2])
+
+print(arr[[0,1,2],[2,0,1]])
+
+idx = arr > 3
+print(idx)
+
+print(arr[idx])
+
 redwine = np.loadtxt(fname='winequality-red.csv', delimiter=';', skiprows=1)
 print(redwine)
 
