@@ -10,6 +10,8 @@ import os
 import urllib.request
 
 
+
+
 def selenium_scroll_option(driver):
     SCROLL_PAUSE_SEC = 3
     # 스크롤 높이 가져옴

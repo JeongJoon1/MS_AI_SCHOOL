@@ -11,7 +11,7 @@ import os
 from torchvision.io import read_image
 import pandas as pd
 
-# train 데이터로 학습하고 테스트하는 경우
+# train 데이터로 학습하고 학습시키지 않은 test데이터로 test
 
 class CustomImageDataset(Dataset):
     def __init__(self, annotations_file, img_dir, transform=None, target_transform=None):
@@ -50,7 +50,7 @@ class Net(nn.Module):
         self.fc3 = nn.Linear(256, 128)
         self.fc4 = nn.Linear(128, 64)
         self.fc5 = nn.Linear(64, 32)
-        self.fc6 = nn.Linear(32, 10)
+        self.fc6 = nn.Linear(32, 3)
 
     def forward(self, x):
         x = x.float()
@@ -95,13 +95,18 @@ print("set vars and device done")
 #     batch_size = batch_size, shuffle=True, **kwargs)
 batch_size = 64
 test_batch_size = 1000
-dataset = CustomImageDataset(
-    annotations_file = 'C:/Users/joon/Github/MS_AI_SCHOOL/221209/data/FashionMNIST/annotations.csv',
-    img_dir = 'C:/Users/joon/Github/MS_AI_SCHOOL/221209/data/FashionMNIST/imgs'
+train_dataset = CustomImageDataset(
+    annotations_file = 'C:/Users/tim03/OneDrive - inha.edu/MS_AI_SCHOOL/221209/data/transport_train_annotations.csv',
+    img_dir = 'C:/Users/tim03/OneDrive - inha.edu/MS_AI_SCHOOL/221209/data/resized_transport_train_data'
 )
 
-train_loader = torch.utils.data.DataLoader(dataset, batch_size=64, shuffle=True)
-test_loader = torch.utils.data.DataLoader(dataset,
+test_dataset = CustomImageDataset(
+    annotations_file = 'C:/Users/tim03/OneDrive - inha.edu/MS_AI_SCHOOL/221209/data/transport_test_annotations.csv',
+    img_dir = 'C:/Users/tim03/OneDrive - inha.edu/MS_AI_SCHOOL/221209/data/resized_transport_test_data'
+)
+
+train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=64, shuffle=True)
+test_loader = torch.utils.data.DataLoader(test_dataset,
     batch_size=test_batch_size, shuffle=True, **kwargs)
 
 # test_loader = torch.utils.data.DataLoader(
@@ -147,4 +152,4 @@ def test(log_interval, model, device, test_loader):
 for epoch in range(1, 11):
     train(log_interval, model, device, train_loader, optimizer, epoch)
     test(log_interval, model, device, test_loader)
-torch.save(model, './model.pt')
+torch.save(model, './transport_model.pt')
